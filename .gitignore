@@ -1,0 +1,67 @@
+﻿Autosave files
+*~
+
+# Build/test output
+[Oo]bj/
+[Bb]in/
+TestResults/
+
+# VS sometimes writes these for no apparent      reason
+_UpgradeReport_Files
+UpgradeLog.*
+
+# globs
+Makefile.in
+*.vs
+*.DS_Store
+*.sln.cache
+*.suo
+*.cache
+*.pidb
+*.userprefs
+*.usertasks
+config.log
+config.make
+config.status
+aclocal.m4
+install-sh
+autom4te.cache/
+*.user
+*.tar.gz
+tarballs/
+test-results/
+Thumbs.db
+
+#Mac bundle stuff
+*.dmg
+*.app
+
+*.swp
+*.nib
+*.pfx
+
+# ReSharper
+*_Resharper.*
+*.Resharper
+
+# dotCover
+*.dotCover
+
+# NuGet Packages
+*.nupkg
+################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/AuroraBasketService/.vs/AuroraBasketService/v16
+/AuroraBasketService/AuroraBasketService/obj/Debug/netcoreapp2.1
+/AuroraBasketService/AuroraBasketService/obj
+/AuroraBasketService/AuroraBasketService/bin/Debug/netcoreapp2.1
+/AuroraBasketService/.vs/AuroraBasketService/config/applicationhost.config
+/AuroraBasketService/.vs/AuroraBasketService/DesignTimeBuild/.dtbcache
+/AuroraBasketService/AuroraBasketService/bin/Debug/netstandard2.1
+/AuroraBasketService/.vs/AuroraBasketService/DesignTimeBuild
+/.vs/AuroraBasketService/v16
+/.vs
+/AuroraBasketService/.vs/AuroraBasketService/v17/.suo
+/AuroraBasketService/.vs/AuroraBasketService
