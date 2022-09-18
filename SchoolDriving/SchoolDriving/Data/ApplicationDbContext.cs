@@ -16,6 +16,7 @@ namespace SchoolDriving.Data
         public DbSet<OrderItem> OrderItems { get; set; } 
         public DbSet<Instructor> Instructors { get; set; }
         public DbSet<Student> Students { get; set; }
-        public DbSet<Schedule> Schedules { get; set; }      
+        public DbSet<Schedule> Schedules { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
     }
 }

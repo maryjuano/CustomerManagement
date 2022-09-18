@@ -1,0 +1,66 @@
+﻿@page
+@model SchoolDriving.Pages.Orders.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create</h1>
+
+<h4>Order</h4>
+<hr />
+<div class="row">
+    <form method="post">
+        <div class="col-md-4">
+
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label class="control-label">Student</label>
+                <select asp-for="Order.StudentId" class="form-control" asp-items="ViewBag.Students">
+                    <option selected="selected" value="">-- Select Student --</option>
+                </select>
+                <span asp-validation-for="Order.StudentId" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Order Reference</label>
+                <input asp-for="Order.OrderReference" disabled readonly="readonly" class="form-control" />
+                <span asp-validation-for="Order.OrderReference" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Total Price</label>
+                <input asp-for="Order.TotalPrice" disabled readonly="readonly" class="form-control" />
+                <span asp-validation-for="Order.TotalPrice" class="text-danger"></span>
+            </div>
+
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="form-group">
+                <label class="control-label">Created On</label>
+                <input asp-for="Order.DateCreated" disabled readonly="readonly" class="form-control" />              
+            </div>
+
+            <div class="form-group">
+                <label class="control-label">Last Modified</label>
+                <input asp-for="Order.LastModified" disabled readonly="readonly" class="form-control" />
+            </div>
+        </div>
+    </form>
+</div>
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

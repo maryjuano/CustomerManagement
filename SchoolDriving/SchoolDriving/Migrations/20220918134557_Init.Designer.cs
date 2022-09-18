@@ -12,7 +12,7 @@ using SchoolDriving.Data;
 namespace SchoolDriving.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220917122122_Init")]
+    [Migration("20220918134557_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -272,11 +272,58 @@ namespace SchoolDriving.Migrations
                     b.ToTable("Instructors");
                 });
 
+            modelBuilder.Entity("SchoolDriving.Models.Invoice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsPaid")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid>("OrderId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("PaymentReference")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("StudentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("StudentId");
+
+                    b.ToTable("Invoices");
+                });
+
             modelBuilder.Entity("SchoolDriving.Models.Order", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("datetime2");
+
+                    b.Property<Guid?>("InvoiceId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("LastModified")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("OrderReference")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid>("StudentId")
                         .HasColumnType("uniqueidentifier");
@@ -300,17 +347,29 @@ namespace SchoolDriving.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("CourseName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("InvoiceId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("OrderId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<decimal>("ProductPrice")
                         .HasColumnType("decimal(18,2)");
 
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.HasIndex("OrderId");
 
-                    b.ToTable("OrderItem");
+                    b.ToTable("OrderItems");
                 });
 
             modelBuilder.Entity("SchoolDriving.Models.Schedule", b =>
@@ -434,6 +493,17 @@ namespace SchoolDriving.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SchoolDriving.Models.Invoice", b =>
+                {
+                    b.HasOne("SchoolDriving.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Student");
+                });
+
             modelBuilder.Entity("SchoolDriving.Models.Order", b =>
                 {
                     b.HasOne("SchoolDriving.Models.Student", "Student")
@@ -447,13 +517,15 @@ namespace SchoolDriving.Migrations
 
             modelBuilder.Entity("SchoolDriving.Models.OrderItem", b =>
                 {
-                    b.HasOne("SchoolDriving.Models.Order", "Order")
+                    b.HasOne("SchoolDriving.Models.Invoice", null)
+                        .WithMany("OrderItems")
+                        .HasForeignKey("InvoiceId");
+
+                    b.HasOne("SchoolDriving.Models.Order", null)
                         .WithMany("OrderItems")
                         .HasForeignKey("OrderId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Order");
                 });
 
             modelBuilder.Entity("SchoolDriving.Models.Schedule", b =>
@@ -485,6 +557,11 @@ namespace SchoolDriving.Migrations
             modelBuilder.Entity("SchoolDriving.Models.Instructor", b =>
                 {
                     b.Navigation("Schedules");
+                });
+
+            modelBuilder.Entity("SchoolDriving.Models.Invoice", b =>
+                {
+                    b.Navigation("OrderItems");
                 });
 
             modelBuilder.Entity("SchoolDriving.Models.Order", b =>

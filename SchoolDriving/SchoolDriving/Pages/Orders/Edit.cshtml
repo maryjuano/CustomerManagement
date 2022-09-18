@@ -1,0 +1,140 @@
+﻿@page
+@model SchoolDriving.Pages.Orders.EditModel
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Order - @Model.Order.OrderReference</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <div class="form-group">
+            <label class="control-label">Student</label>
+            <select asp-for="Order.StudentId" class="form-control" asp-items="ViewBag.Students" disabled></select>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Order Reference</label>
+            <input asp-for="Order.OrderReference" readonly="readonly" class="form-control" />
+            <span asp-validation-for="Order.OrderReference" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Total Price</label>
+            <input asp-for="Order.TotalPrice" disabled readonly="readonly" class="form-control" />
+            <span asp-validation-for="Order.TotalPrice" class="text-danger"></span>
+        </div>
+
+        <br />
+    </div>
+    <h2>Order Items</h2>
+    <div class="col-md-2">
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#partialModal">Create</button>
+    </div>
+
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Course
+                    </th>
+                    <th>
+                        Price
+                    </th>
+                    <th>
+                        Quantity
+                    </th>
+                    <th>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Order.OrderItems)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CourseName)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProductPrice)
+                        </td>
+
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            <form asp-page-handler="delete" method="post">
+                                <input type="hidden" name="orderItemId" value="@item.Id" />
+                                <button class="btn btn-warning">Delete</button>
+                            </form>
+
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+    </div>
+</div>
+<br />
+<div>
+    <a asp-page="./Index">Back to List</a>
+</div>
+
+<div id="partialModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">New Order Item</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form asp-page-handler="add" id="orderItemCreateForm" method="post">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" name="orderId" value="@Model.Order.Id" />
+                    <div class="form-group">
+                        <label class="control-label">Courses</label>
+                        <select asp-for="OrderItem.CourseId" class="form-control" asp-items="ViewBag.Courses">
+                            <option selected="selected" value="">-- Select Course --</option>
+                        </select>
+                        <span asp-validation-for="OrderItem.CourseId" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="OrderItem.Quantity" class="control-label"></label>
+                        <input asp-for="OrderItem.Quantity" class="form-control" />
+                        <span asp-validation-for="OrderItem.Quantity" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="control-label">Price</label>
+                        <input asp-for="OrderItem.ProductPrice" readonly="readonly" value="0" class="form-control" />
+                        <span asp-validation-for="OrderItem.ProductPrice" class="text-danger"></span>
+                    </div>
+
+                    <br />
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnSaveOrderItem" class="btn btn-primary">Save</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $('#btnSaveOrderItem').click(function () {
+            $('#orderItemCreateForm').submit();
+        });
+    </script>
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }
