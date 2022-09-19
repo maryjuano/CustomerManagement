@@ -1,4 +1,4 @@
-﻿@page 
+﻿@page "/"
 @model SchoolDriving.Pages.DashboardModel
 
 @{
@@ -6,3 +6,89 @@
 }
 
 
+<div class="row">
+    <div class="col-md-6">
+        <h4>Orders for this week</h4>
+          <canvas id="order"></canvas>
+    </div>
+   <div class="col-md-6">
+        <h4>Invoices for this week</h4>
+          <canvas id="invoice"></canvas>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        function getLabels() {
+            var curr = new Date; // get current date
+var first = curr.getDate() - curr.getDay(); // First day is the day of the month - the day of the week
+var last = first + 6; // last day is the first day + 6
+
+var firstday = new Date(curr.setDate(first))
+var lastday = new Date(curr.setDate(last))
+
+
+
+const date = new Date(firstday.getTime());
+
+  const dates = [];
+
+  while (date <= lastday) {
+    dates.push(new Date(date).toLocaleDateString('en-PH'));
+    date.setDate(date.getDate() + 1);
+  }
+
+ return dates;
+        }
+        </script>
+    <script>
+      const labels = getLabels();
+
+
+const orderData = {
+  labels: labels,
+  datasets: [{
+    label: 'Orders',
+    data: [65, 59, 80, 81, 56, 55, 40],   
+    borderWidth: 1
+  }]
+};
+
+
+const invoiceData = {
+  labels: labels,
+  datasets: [{
+    label: 'Invoices',
+    data: [22, 1, 5, 8, 11, 3, 6],   
+    borderWidth: 1
+  }]
+};
+
+const config = {
+  type: 'bar',
+  data: orderData,
+  options: {
+    scales: {
+      y: {
+        beginAtZero: true
+      }
+    }
+  },
+};
+
+              const order = new Chart(
+                document.getElementById('order'),
+                config
+              );
+
+              config.data = invoiceData;
+
+
+                const invoice = new Chart(
+                document.getElementById('invoice'),
+                config
+              );
+    </script>
+
+}
