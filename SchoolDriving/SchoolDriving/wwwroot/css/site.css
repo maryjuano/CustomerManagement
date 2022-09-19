@@ -16,3 +16,17 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+.col-md-6.col-md-offset-2 section {
+    visibility:hidden;
+}
+
+.form-floating {
+    margin-bottom: 20px;
+}
+
+
+#forgot-password, #resend-confirmation, a[href="/Identity/Account/Register?returnUrl=%2F"] {
+    visibility: hidden;
+}
+
