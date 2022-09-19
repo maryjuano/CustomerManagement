@@ -19,7 +19,6 @@ public class Order
     public Guid StudentId { get; set; }
     public DateTime DateCreated { get; set; }
     public DateTime LastModified { get; set; }
-
     public Guid? InvoiceId { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; }
 }
@@ -31,6 +30,7 @@ public class OrderItem
     public Guid Id { get; set; }
     public Guid CourseId { get; set; }
     public string CourseName { get; set; }
+    [Range(1, 100)]
     public int Quantity { get; set; }
     public decimal ProductPrice { get; set; }
     public Guid OrderId { get; set; }

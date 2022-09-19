@@ -33,24 +33,12 @@
                 <label class="control-label">Total Price</label>
                 <input asp-for="Order.TotalPrice" disabled readonly="readonly" class="form-control" />
                 <span asp-validation-for="Order.TotalPrice" class="text-danger"></span>
-            </div>
-
-            <br />
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
+            </div>          
         </div>
-
-        <div class="col-md-4">
-            <div class="form-group">
-                <label class="control-label">Created On</label>
-                <input asp-for="Order.DateCreated" disabled readonly="readonly" class="form-control" />              
-            </div>
-
-            <div class="form-group">
-                <label class="control-label">Last Modified</label>
-                <input asp-for="Order.LastModified" disabled readonly="readonly" class="form-control" />
-            </div>
+      
+        <br />
+        <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary" />
         </div>
     </form>
 </div>

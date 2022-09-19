@@ -26,7 +26,7 @@ namespace SchoolDriving.Pages.Orders
             if (_context.Orders != null)
             {
                 Order = await _context.Orders
-                .Include(o => o.Student).ToListAsync();
+                .Include(o => o.Student).OrderByDescending(o => o.DateCreated).ToListAsync();
             }
         }
     }

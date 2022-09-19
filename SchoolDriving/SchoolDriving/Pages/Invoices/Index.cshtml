@@ -1,50 +1,54 @@
 ﻿@page
-@model SchoolDriving.Pages.Orders.IndexModel
+@model SchoolDriving.Pages.Invoices.IndexModel
+
 
 @{
-    ViewData["Title"] = "Orders";
+    ViewData["Title"] = "Invoices";
 }
 
-<h1>List of Orders</h1>
+<h1>List of Invoices</h1>
 
-<p>
-    <a asp-page="Create">Create</a>
-</p>
+
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].OrderReference)
+                Payment Reference
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].TotalPrice)
+                Amount
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Order[0].Student)
-            </th>    
+                @Html.DisplayNameFor(model => model.Invoice[0].Student)
+            </th>
             <th>
                 Created On
+            </th>          
+            <th>
+                Payment Date
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in Model.Order)
+        @foreach (var item in Model.Invoice)
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.OrderReference)
+                    @Html.DisplayFor(modelItem => item.PaymentReference)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalPrice)
                 </td>
                 <td>
-                    @(item.Student.FirstName + " " + item.Student.LastName) 
+                    @(item.Student?.FirstName + " " + item.Student?.LastName)
                 </td>
                 <td>
-                    @(item.DateCreated.ToShortDateString())
+                   @(item.DateCreated.ToShortDateString())
                 </td>
-
+                <td>
+                    @(item.PaymentDate?.ToShortDateString())
+                </td>
                 <td>
                     <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a>
                 </td>

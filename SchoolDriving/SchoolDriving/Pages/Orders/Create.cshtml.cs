@@ -45,7 +45,7 @@ namespace SchoolDriving.Pages.Orders
             _context.Orders.Add(Order);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return Redirect("/Orders/Edit?id=" + Order.Id);
         }
     }
 }

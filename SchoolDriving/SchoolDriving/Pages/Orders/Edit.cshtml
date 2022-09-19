@@ -30,9 +30,26 @@
 
         <br />
     </div>
-    <h2>Order Items</h2>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label class="control-label">Created On</label>
+            <input type="date" asp-for="Order.DateCreated" disabled readonly="readonly" class="form-control" />
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Last Modified</label>
+            <input type="date" asp-for="Order.LastModified" disabled readonly="readonly" class="form-control" />
+        </div>
+    </div>
+    <h4>Order Items</h4>
+
+
     <div class="col-md-2">
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#partialModal">Create</button>
+        @if (Model.Order.InvoiceId == Guid.Empty || Model.Order.InvoiceId == null)
+        {
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#partialModal">CREATE</button>
+        }
+
     </div>
 
     <div class="col-md-12">
@@ -67,11 +84,13 @@
                             @Html.DisplayFor(modelItem => item.Quantity)
                         </td>
                         <td>
-                            <form asp-page-handler="delete" method="post">
-                                <input type="hidden" name="orderItemId" value="@item.Id" />
-                                <button class="btn btn-warning">Delete</button>
-                            </form>
-
+                            @if (Model.Order.InvoiceId == Guid.Empty || Model.Order.InvoiceId == null)
+                            {
+                                <form asp-page-handler="delete" method="post">
+                                    <input type="hidden" name="orderItemId" value="@item.Id" />
+                                    <button class="btn btn-warning">Delete</button>
+                                </form>
+                            }
                         </td>
                     </tr>
                 }
@@ -81,9 +100,43 @@
     </div>
 </div>
 <br />
-<div>
-    <a asp-page="./Index">Back to List</a>
+<div class="row">
+    <div class="col-md-2">
+        <a asp-page="./Index">Back to List</a>
+    </div>
+    <div class="col-md-8">
+    </div>
+    <div class="col-md-2">
+        @if (Model.Order.InvoiceId == Guid.Empty || Model.Order.InvoiceId == null)
+        {
+            <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#invoiceModal">CREATE INVOICE</button>
+        }
+        else
+        {
+            <a asp-page="/Invoices/Edit" asp-route-id="@Model.Order.InvoiceId">View Invoice</a>
+        }
+    </div>
 </div>
+
+
+<div id="invoiceModal" class="modal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Are you sure you want to create an Invoice?</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                This action is irreversable and Order will be processed.
+            </div>
+            <div class="modal-footer">
+                <button type="button" id="btnCreateInvoice" class="btn btn-success">CREATE</button>
+                <button type="button" id="btnCloseModal" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="partialModal" class="modal" tabindex="-1">
     <div class="modal-dialog">
@@ -131,6 +184,15 @@
     <script>
         $('#btnSaveOrderItem').click(function () {
             $('#orderItemCreateForm').submit();
+        });
+
+        $('#btnCreateInvoice').click(function () {
+            var orderItemCount = '@Model.Order.OrderItems?.Count'
+            if (orderItemCount == 0) {
+                alert('No Order Items Found! Please Add one first');
+                return;                
+            }
+            window.location.href = "/Invoices/Create?orderId=" + '@Model.Order.Id';
         });
     </script>
 

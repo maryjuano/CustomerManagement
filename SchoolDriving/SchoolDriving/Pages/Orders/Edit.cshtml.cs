@@ -56,7 +56,7 @@ namespace SchoolDriving.Pages.Orders
             var courses = _context.Courses.AsEnumerable();
             var currentCourse = courses.SingleOrDefault(c => c.Id == OrderItem.CourseId);
             var order = _context.Orders.Include(o => o.OrderItems).Single(o => o.Id == orderId);
-
+            
 
             OrderItem.OrderId = orderId;
             OrderItem.ProductPrice = currentCourse?.Price ?? 0M;
@@ -80,7 +80,7 @@ namespace SchoolDriving.Pages.Orders
             }
 
             order.TotalPrice = total + (OrderItem.Quantity * OrderItem.ProductPrice);
-
+            order.LastModified = DateTime.Now;
             _context.Orders.Attach(order).State = EntityState.Modified;
 
             if(existingItem == null)
@@ -121,7 +121,7 @@ namespace SchoolDriving.Pages.Orders
             }
 
             order.TotalPrice = total;
-
+            order.LastModified = DateTime.Now;
             _context.Orders.Attach(order).State = EntityState.Modified;
 
             await _context.SaveChangesAsync();

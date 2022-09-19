@@ -5,7 +5,6 @@ namespace SchoolDriving.Models
 {
     public class Schedule
     {
-
         public Schedule()
         {
             Students = new HashSet<Student>();
