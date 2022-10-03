@@ -20,7 +20,7 @@ namespace SchoolDriving.Pages.Students
         }
 
         public IActionResult OnGet()
-        {
+        {          
             return Page();
         }
 

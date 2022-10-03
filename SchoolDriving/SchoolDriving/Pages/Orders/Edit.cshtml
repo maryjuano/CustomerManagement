@@ -79,7 +79,6 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.ProductPrice)
                         </td>
-
                         <td>
                             @Html.DisplayFor(modelItem => item.Quantity)
                         </td>
@@ -164,9 +163,10 @@
                     </div>
 
                     <div class="form-group">
-                        <label class="control-label">Price</label>
-                        <input asp-for="OrderItem.ProductPrice" readonly="readonly" value="0" class="form-control" />
-                        <span asp-validation-for="OrderItem.ProductPrice" class="text-danger"></span>
+                        <label class="control-label">Is Professional</label>           
+                        <br/>
+                        <input asp-for="OrderItem.Professional" type="checkbox" />
+                        <span asp-validation-for="OrderItem.Professional" class="text-danger"></span>
                     </div>
 
                     <br />

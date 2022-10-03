@@ -32,6 +32,7 @@ public class OrderItem
     public string CourseName { get; set; }
     [Range(1, 100)]
     public int Quantity { get; set; }
+    public bool Professional { get; set; }
     public decimal ProductPrice { get; set; }
     public Guid OrderId { get; set; }
 }

@@ -1,4 +1,5 @@
 ﻿@page
+@using SchoolDriving.Models
 @model SchoolDriving.Pages.Students.EditModel
 
 @{
@@ -9,23 +10,22 @@
 
 <h4>Student</h4>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
+<form method="post">
+    <div class="row">
+        <div class="col-md-4">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Student.Id" />
             <div class="form-group">
-                <label asp-for="Student.FirstName" class="control-label"></label>
+                <label>First Name</label>
                 <input asp-for="Student.FirstName" class="form-control" />
                 <span asp-validation-for="Student.FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.MiddleName" class="control-label"></label>
+                <label>Middle Name</label>
                 <input asp-for="Student.MiddleName" class="form-control" />
                 <span asp-validation-for="Student.MiddleName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Student.LastName" class="control-label"></label>
+                <label>Last Name</label>
                 <input asp-for="Student.LastName" class="form-control" />
                 <span asp-validation-for="Student.LastName" class="text-danger"></span>
             </div>
@@ -35,17 +35,100 @@
                 <span asp-validation-for="Student.Email" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label>Birthday</label>
+                <input type="date" asp-for="Student.BirthDate" class="form-control" />
+                <span asp-validation-for="Student.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Educational Attainment</label>
+                <select asp-for="Student.EducationalAttainment" class="form-control">
+                    <option value="" selected>-- Select Educational Attainment --</option>
+                    <option value="Elementary Graduate">Elementary Graduate</option>
+                    <option value="HighSchool Graduate">HighSchool Graduate</option>
+                    <option value="TVET Graduate">TVET Graduate</option>
+                    <option value="College Level">College Level</option>
+                    <option value="College Graduate">College Graduate</option>
+                </select>
+                <span asp-validation-for="Student.EducationalAttainment" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Number, Street</label>
+                <input asp-for="Student.StreetNumber" class="form-control" />
+                <span asp-validation-for="Student.StreetNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Barangay</label>
+                <input asp-for="Student.Barangay" class="form-control" />
+                <span asp-validation-for="Student.Barangay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Municipality</label>
+                <input asp-for="Student.Municipality" class="form-control" />
+                <span asp-validation-for="Student.Municipality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Province</label>
+                <input asp-for="Student.Province" class="form-control" />
+                <span asp-validation-for="Student.Province" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Zip Code</label>
+                <input asp-for="Student.ZipCode" class="form-control" />
+                <span asp-validation-for="Student.ZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Employment Status</label>
+                <select asp-for="Student.EmploymentStatus" class="form-control" asp-items="Html.GetEnumSelectList<EmploymentStatus>()">
+                    <option selected="selected" value="">-- Select Employment Status --</option>
+                </select>
+                <span asp-validation-for="Student.EmploymentStatus" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
                 <label asp-for="Student.Mobile" class="control-label"></label>
                 <input asp-for="Student.Mobile" class="form-control" />
                 <span asp-validation-for="Student.Mobile" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <label>Age</label>
+                <input asp-for="Student.Age" class="form-control" />
+                <span asp-validation-for="Student.Age" class="text-danger"></span>
             </div>
-        </form>
+            <div class="form-group">
+                <label>Sex</label>
+                <select asp-for="Student.Sex" class="form-control">
+                    <option value="" selected>-- Select Sex --</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="Student.Sex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Civil Status</label>
+                <select asp-for="Student.CivilStatus" class="form-control">
+                    <option value="" selected>-- Select Civil Status --</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                </select>
+                <span asp-validation-for="Student.CivilStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>License Number</label>
+                <input asp-for="Student.LicenseNumber" class="form-control" />
+                <span asp-validation-for="Student.LicenseNumber" class="text-danger"></span>
+            </div>
+        </div>
     </div>
-</div>
-
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 <div>
     <a asp-page="./Index">Back to List</a>
 </div>
