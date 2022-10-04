@@ -1,0 +1,27 @@
+﻿@page 
+@model FrontEnd.Pages.ProductsModel
+
+@{
+    ViewData["Title"] = "Services";
+}
+
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Services</h2>
+            <p>Gusto mo bang magkalisensya ng lehitimo, nasa tamang proseso at makamasang diskwento? Sa Abad-Norella Driving School alaga kana siguradong discounted kapa!</p>
+        </div>
+        @foreach (var item in Model.Course)
+        {
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="box">
+                    <h3>@item.Name</h3>
+                    <h4><sup>&#8369;</sup>@item.Price</h4>
+                    <p>@item.Description</p>
+                    <a href="#" class="buy-btn">Buy</a>
+                </div>
+            </div>
+        }    
+
+    </div>
+</section><!-- End Pricing Section -->

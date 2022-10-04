@@ -1,6 +1,56 @@
 ﻿@page
 @model IndexModel
+
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Home";
 }
 
+
+
+<!-- ======= About Us Section ======= -->
+<section id="about" class="about">
+    <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+            <h2>About Us</h2>
+        </div>
+
+        <div class="row content">
+            <div class="col-lg-6">
+                <p>
+                    Abad-Norella Center for Skills Inc. - Driving School
+                </p>
+                <ul>
+                    <li><i class="ri-check-double-line"></i> First Accredited Driving School in Occidental Mindoro. </li>
+                    <li><i class="ri-check-double-line"></i> Kami po ay nag oofffer ng ONLINE 15HRS THEORETICAL DRIVING COURSE.</li>
+                    <li><i class="ri-check-double-line"></i> TESDA Accredited</li>
+                </ul>
+            </div>
+            <div class="col-lg-6 pt-4 pt-lg-0">
+                <p>
+                    Affordable & Excellent Driving Teaching School
+                    with a Professional and Friendly Driving Instructor
+                </p>
+            </div>
+        </div>
+
+    </div>
+</section><!-- End About Us Section -->
+<!-- ======= Why Us Section ======= -->
+@{
+    await Html.RenderPartialAsync("_Why");
+}
+@{
+    await Html.RenderPartialAsync("_Pricing");
+}
+
+<!-- ======= Contact Section ======= -->
+@{
+    await Html.RenderPartialAsync("_FAQ");
+}
+
+
+<!-- ======= Contact Section ======= -->
+@{
+    await Html.RenderPartialAsync("_Contact");
+}
