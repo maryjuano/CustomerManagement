@@ -1,0 +1,77 @@
+﻿@page
+@model SchoolDriving.Pages.Enrollments.IndexModel
+
+@{
+    ViewData["Title"] = "Enrollment Forms";
+}
+
+<h1>Enrollment Forms</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>             
+                First Name
+            </th>
+            <th>
+                Middle Name
+            </th>
+            <th>
+                Last Name
+               
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enrollment[0].Email)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Enrollment[0].Mobile)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.Enrollment[0].Course)
+            </th>
+            <th>
+                Is Approved
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Enrollment) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Mobile)
+            </td>           
+            <td>
+                @Html.DisplayFor(modelItem => item.Course.Name)
+            </td>
+            <td>
+                @if(item.Approved) {
+                    @("Yes")
+                }
+                else{
+                    @("No")
+                }
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">View</a>             
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

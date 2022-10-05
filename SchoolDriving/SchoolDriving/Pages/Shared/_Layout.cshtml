@@ -27,6 +27,9 @@
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-page="/Enrollments/Index">Enrollment Forms</a>
+                            </li>
+                            <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-page="/Courses/Index">Courses</a>
                             </li>
                             <li class="nav-item">

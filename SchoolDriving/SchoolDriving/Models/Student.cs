@@ -22,7 +22,7 @@ namespace SchoolDriving.Models
         public int Age { get; set; }
         public string Sex { get; set; }
         public string CivilStatus { get; set; }
-        public string LicenseNumber { get; set; }
+        public string? LicenseNumber { get; set; }
         public string EducationalAttainment { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
         public DateTime CreatedOn { get; set; }

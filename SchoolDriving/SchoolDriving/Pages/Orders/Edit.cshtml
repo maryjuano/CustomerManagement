@@ -32,6 +32,11 @@
     </div>
     <div class="col-md-4">
         <div class="form-group">
+            <label class="control-label">Enrollment Reference</label>
+            <select asp-for="Order.EnrollmentId" class="form-control" asp-items="ViewBag.Enrollments" disabled></select>
+        </div>
+
+        <div class="form-group">
             <label class="control-label">Created On</label>
             <input type="date" asp-for="Order.DateCreated" disabled readonly="readonly" class="form-control" />
         </div>
@@ -188,7 +193,7 @@
 
         $('#btnCreateInvoice').click(function () {
             var orderItemCount = '@Model.Order.OrderItems?.Count'
-            if (orderItemCount == 0) {
+            if (orderItemCount == 0) { 
                 alert('No Order Items Found! Please Add one first');
                 return;                
             }

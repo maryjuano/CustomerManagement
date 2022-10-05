@@ -1,0 +1,171 @@
+﻿@page
+@using FrontEnd.Models
+@model FrontEnd.Pages.EnrollmentModel
+@{
+    ViewData["Title"] = "Enrollment Form";
+}
+
+
+<section id="pricing" class="pricing">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>You are availing</h2>
+            <p>Kindly submit the requirements for us to process your order quickly</p>
+        </div>
+        <div class="row">
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            </div>
+            <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
+                <div class="box">
+                    <h3>@Model.CourseName for @Model.Hours hrs</h3>
+                    <h4><sup>&#8369;</sup>@Model.Price</h4>
+                    <ul>
+                        <li><i class="bx bx-check"></i>Photocopy of Birth Certificate</li>
+                        <li><i class="bx bx-check"></i>Photocopy of 1 Valid ID</li>
+                        <li><i class="bx bx-check"></i>1x1 Picture (1pc)</li>
+                        <li>Any of the Following:</li>
+                        <ul>
+                            <li>- Barangay Clearance</li>
+                            <li>- National Clearance</li>
+                            <li>- NBI Clearance</li>
+                        </ul>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contact" class="contact">
+    <div class="container" data-aos="fade-up">
+        <h4>Enrollment Form</h4>
+        <hr />
+        <form method="post">
+            <input type="hidden" asp-for="CourseId" />
+            <div class="row">
+                <div class="col-md-4">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label>First Name</label>
+                        <input asp-for="Enrollment.FirstName" class="form-control" />
+                        <span asp-validation-for="Enrollment.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Middle Name</label>
+                        <input asp-for="Enrollment.MiddleName" class="form-control" />
+                        <span asp-validation-for="Enrollment.MiddleName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Last Name</label>
+                        <input asp-for="Enrollment.LastName" class="form-control" />
+                        <span asp-validation-for="Enrollment.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Enrollment.Email" class="control-label"></label>
+                        <input asp-for="Enrollment.Email" class="form-control" />
+                        <span asp-validation-for="Enrollment.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Birthday</label>
+                        <input type="date" asp-for="Enrollment.BirthDate" class="form-control" />
+                        <span asp-validation-for="Enrollment.BirthDate" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Educational Attainment</label>
+                        <select asp-for="Enrollment.EducationalAttainment" class="form-control">
+                            <option value="" selected>-- Select Educational Attainment --</option>
+                            <option value="Elementary Graduate">Elementary Graduate</option>
+                            <option value="HighSchool Graduate">HighSchool Graduate</option>
+                            <option value="TVET Graduate">TVET Graduate</option>
+                            <option value="College Level">College Level</option>
+                            <option value="College Graduate">College Graduate</option>
+                        </select>
+                        <span asp-validation-for="Enrollment.EducationalAttainment" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label>Number, Street</label>
+                        <input asp-for="Enrollment.StreetNumber" class="form-control" />
+                        <span asp-validation-for="Enrollment.StreetNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Barangay</label>
+                        <input asp-for="Enrollment.Barangay" class="form-control" />
+                        <span asp-validation-for="Enrollment.Barangay" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Municipality</label>
+                        <input asp-for="Enrollment.Municipality" class="form-control" />
+                        <span asp-validation-for="Enrollment.Municipality" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Province</label>
+                        <input asp-for="Enrollment.Province" class="form-control" />
+                        <span asp-validation-for="Enrollment.Province" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Zip Code</label>
+                        <input asp-for="Enrollment.ZipCode" class="form-control" />
+                        <span asp-validation-for="Enrollment.ZipCode" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Employment Status</label>
+                        <select asp-for="Enrollment.EmploymentStatus" class="form-control" asp-items="Html.GetEnumSelectList<EmploymentStatus>()">
+                            <option selected="selected" value="">-- Select Employment Status --</option>
+                        </select>
+                        <span asp-validation-for="Enrollment.EmploymentStatus" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Enrollment.Mobile" class="control-label"></label>
+                        <input asp-for="Enrollment.Mobile" class="form-control" />
+                        <span asp-validation-for="Enrollment.Mobile" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input asp-for="Enrollment.Age" class="form-control" />
+                        <span asp-validation-for="Enrollment.Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Sex</label>
+                        <select asp-for="Enrollment.Sex" class="form-control">
+                            <option value="" selected>-- Select Sex --</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                        <span asp-validation-for="Enrollment.Sex" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>Civil Status</label>
+                        <select asp-for="Enrollment.CivilStatus" class="form-control">
+                            <option value="" selected>-- Select Civil Status --</option>
+                            <option value="Single">Single</option>
+                            <option value="Married">Married</option>
+                        </select>
+                        <span asp-validation-for="Enrollment.CivilStatus" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label>License Number</label>
+                        <input asp-for="Enrollment.LicenseNumber" class="form-control" />
+                        <span asp-validation-for="Enrollment.LicenseNumber" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="row">
+                <div class="col-md-2">
+                    <input type="submit" value="Finish" class="btn btn-primary" />
+                </div>
+            </div>
+        </form>
+    </div>
+</section>
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

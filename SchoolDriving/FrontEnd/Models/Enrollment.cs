@@ -3,11 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace FrontEnd.Models
 {
-    public class Student
+    public class Enrollment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
+        public string Reference { get; set; }
         public string FirstName { get; set; }
         public string? MiddleName { get; set; }
         public string LastName { get; set; }
@@ -26,15 +27,8 @@ namespace FrontEnd.Models
         public string EducationalAttainment { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
         public DateTime CreatedOn { get; set; }
-    }
-
-    public enum EmploymentStatus
-    {
-        Casual = 1,
-        JobOrder = 2,
-        Probationary = 3,
-        Permanent = 4,
-        SelfEmployed = 5,
-        OFW
+        public bool Approved { get; set; }
+        public Course Course { get; set; }
+        public Guid CourseId { get; set; }
     }
 }

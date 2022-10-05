@@ -1,0 +1,149 @@
+﻿@page
+@using SchoolDriving.Models
+@model SchoolDriving.Pages.Enrollments.CreateModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h4>Create Enrollment</h4>
+<hr />
+
+<form method="post">
+    <input type="hidden" asp-for="Enrollment.Reference" />
+    <div class="row">
+        <div class="col-md-4">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label>First Name</label>
+                <input asp-for="Enrollment.FirstName" class="form-control" />
+                <span asp-validation-for="Enrollment.FirstName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Middle Name</label>
+                <input asp-for="Enrollment.MiddleName" class="form-control" />
+                <span asp-validation-for="Enrollment.MiddleName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Last Name</label>
+                <input asp-for="Enrollment.LastName" class="form-control" />
+                <span asp-validation-for="Enrollment.LastName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enrollment.Email" class="control-label"></label>
+                <input asp-for="Enrollment.Email" class="form-control" />
+                <span asp-validation-for="Enrollment.Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Birthday</label>
+                <input type="date" asp-for="Enrollment.BirthDate" class="form-control" />
+                <span asp-validation-for="Enrollment.BirthDate" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Educational Attainment</label>
+                <select asp-for="Enrollment.EducationalAttainment" class="form-control">
+                    <option value="" selected>-- Select Educational Attainment --</option>
+                    <option value="Elementary Graduate">Elementary Graduate</option>
+                    <option value="HighSchool Graduate">HighSchool Graduate</option>
+                    <option value="TVET Graduate">TVET Graduate</option>
+                    <option value="College Level">College Level</option>
+                    <option value="College Graduate">College Graduate</option>
+                </select>
+                <span asp-validation-for="Enrollment.EducationalAttainment" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Number, Street</label>
+                <input asp-for="Enrollment.StreetNumber" class="form-control" />
+                <span asp-validation-for="Enrollment.StreetNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Barangay</label>
+                <input asp-for="Enrollment.Barangay" class="form-control" />
+                <span asp-validation-for="Enrollment.Barangay" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Municipality</label>
+                <input asp-for="Enrollment.Municipality" class="form-control" />
+                <span asp-validation-for="Enrollment.Municipality" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Province</label>
+                <input asp-for="Enrollment.Province" class="form-control" />
+                <span asp-validation-for="Enrollment.Province" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Zip Code</label>
+                <input asp-for="Enrollment.ZipCode" class="form-control" />
+                <span asp-validation-for="Enrollment.ZipCode" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Employment Status</label>
+                <select asp-for="Enrollment.EmploymentStatus" class="form-control" asp-items="Html.GetEnumSelectList<EmploymentStatus>()">
+                    <option selected="selected" value="">-- Select Employment Status --</option>
+                </select>
+                <span asp-validation-for="Enrollment.EmploymentStatus" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Course</label>
+                <select asp-for="Enrollment.CourseId" class="form-control" asp-items="ViewBag.Courses">
+                    <option selected="selected" value="">-- Select Course --</option>
+                </select>
+                <span asp-validation-for="Enrollment.CourseId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Enrollment.Mobile" class="control-label"></label>
+                <input asp-for="Enrollment.Mobile" class="form-control" />
+                <span asp-validation-for="Enrollment.Mobile" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Age</label>
+                <input asp-for="Enrollment.Age" class="form-control" />
+                <span asp-validation-for="Enrollment.Age" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Sex</label>
+                <select asp-for="Enrollment.Sex" class="form-control">
+                    <option value="" selected>-- Select Sex --</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+                <span asp-validation-for="Enrollment.Sex" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>Civil Status</label>
+                <select asp-for="Enrollment.CivilStatus" class="form-control">
+                    <option value="" selected>-- Select Civil Status --</option>
+                    <option value="Single">Single</option>
+                    <option value="Married">Married</option>
+                </select>
+                <span asp-validation-for="Enrollment.CivilStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label>License Number</label>
+                <input asp-for="Enrollment.LicenseNumber" class="form-control" />
+                <span asp-validation-for="Enrollment.LicenseNumber" class="text-danger"></span>
+            </div>
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-2">
+            <input type="submit" value="Create" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
+
+
+<div>
+    <a asp-page="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    }

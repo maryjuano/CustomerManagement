@@ -36,7 +36,7 @@ namespace SchoolDriving.Pages.Orders
                 return NotFound();
             }
 
-            var order = await _context.Orders.Include(o => o.OrderItems).FirstOrDefaultAsync(m => m.Id == id);
+            var order = await _context.Orders.Include(o => o.Enrollment).Include(o => o.OrderItems).FirstOrDefaultAsync(m => m.Id == id);
 
             if (order == null)
             {
@@ -45,7 +45,7 @@ namespace SchoolDriving.Pages.Orders
             Order = order;
             ViewData["Students"] = new SelectList(_context.Students.Select(s => new { Id = s.Id, Text = $"{s.FirstName} {s.LastName}" }).AsEnumerable(), "Id", "Text");
             ViewData["Courses"] = new SelectList(_context.Courses.AsEnumerable(), "Id", "Name");
-
+            ViewData["Enrollments"] = new SelectList(_context.Enrollment.AsEnumerable(), "Id", "Reference");
             return Page();
         }
 
