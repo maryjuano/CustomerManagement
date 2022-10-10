@@ -73,14 +73,13 @@ namespace FrontEnd.Pages
             if (!ModelState.IsValid)
             {
                 return Page();
-            }
-
-       
+            }       
 
             _context.Enrollment.Add(Enrollment);
+
             await _context.SaveChangesAsync();
-        
-            return RedirectToPage("Index");
+
+            return Redirect($"/schedule?enrollmentId={Enrollment.Id}#services");           
         }
     }
 }

@@ -1,0 +1,59 @@
+﻿@page
+@model SchoolDriving.Pages.Schedules.IndexModel
+
+@{
+    ViewData["Title"] = "Schedule";
+}
+
+<h4>Schedules</h4>
+<hr>
+<p>
+    <a asp-page="Create">Create</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Instructor
+            </th>
+            <th>
+                Course
+            </th>
+            <th>
+                Start
+            </th>
+            <th>
+                End
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Schedules)
+        {
+            <tr>
+                <td>
+                    @($"{item.Instructor.FirstName} {item.Instructor.LastName}")
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Course.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.StartDate)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EndDate)
+                </td>
+                <td>
+                    <a asp-page="./Edit" asp-route-id="@item.Id">View</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@section Scripts {
+
+}

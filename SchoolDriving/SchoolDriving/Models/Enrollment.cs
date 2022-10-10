@@ -29,6 +29,9 @@ namespace SchoolDriving.Models
         public DateTime CreatedOn { get; set; }
         public Course? Course { get; set; }
         public Guid CourseId { get; set; }
+        public Schedule? Schedule { get; set; }
+        public Guid? ScheduleId { get; set; }
+        public string? PaymentReference { get; set; }
         public bool Approved { get; set; }
     }  
 }

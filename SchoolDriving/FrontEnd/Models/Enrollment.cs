@@ -30,5 +30,7 @@ namespace FrontEnd.Models
         public bool Approved { get; set; }
         public Course Course { get; set; }
         public Guid CourseId { get; set; }
+        public Guid? ScheduleId { get; set; }
+        public string? PaymentReference { get; set; }
     }
 }

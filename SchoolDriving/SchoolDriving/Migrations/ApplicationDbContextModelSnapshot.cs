@@ -310,6 +310,9 @@ namespace SchoolDriving.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PaymentReference")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Province")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -317,6 +320,9 @@ namespace SchoolDriving.Migrations
                     b.Property<string>("Reference")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("ScheduleId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Sex")
                         .IsRequired()
@@ -333,6 +339,8 @@ namespace SchoolDriving.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
+
+                    b.HasIndex("ScheduleId");
 
                     b.ToTable("Enrollment");
                 });
@@ -479,10 +487,6 @@ namespace SchoolDriving.Migrations
                     b.Property<Guid>("CourseId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<string>("Description")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -492,15 +496,16 @@ namespace SchoolDriving.Migrations
                     b.Property<DateTime>("StartDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Title")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("StudentId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CourseId");
 
                     b.HasIndex("InstructorId");
+
+                    b.HasIndex("StudentId");
 
                     b.ToTable("Schedules");
                 });
@@ -548,7 +553,6 @@ namespace SchoolDriving.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("LicenseNumber")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MiddleName")
@@ -566,9 +570,6 @@ namespace SchoolDriving.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("ScheduleId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Sex")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -582,8 +583,6 @@ namespace SchoolDriving.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("ScheduleId");
 
                     b.ToTable("Students");
                 });
@@ -647,7 +646,13 @@ namespace SchoolDriving.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SchoolDriving.Models.Schedule", "Schedule")
+                        .WithMany()
+                        .HasForeignKey("ScheduleId");
+
                     b.Navigation("Course");
+
+                    b.Navigation("Schedule");
                 });
 
             modelBuilder.Entity("SchoolDriving.Models.Invoice", b =>
@@ -707,16 +712,15 @@ namespace SchoolDriving.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("SchoolDriving.Models.Student", "Student")
+                        .WithMany()
+                        .HasForeignKey("StudentId");
+
                     b.Navigation("Course");
 
                     b.Navigation("Instructor");
-                });
 
-            modelBuilder.Entity("SchoolDriving.Models.Student", b =>
-                {
-                    b.HasOne("SchoolDriving.Models.Schedule", null)
-                        .WithMany("Students")
-                        .HasForeignKey("ScheduleId");
+                    b.Navigation("Student");
                 });
 
             modelBuilder.Entity("SchoolDriving.Models.Instructor", b =>
@@ -732,11 +736,6 @@ namespace SchoolDriving.Migrations
             modelBuilder.Entity("SchoolDriving.Models.Order", b =>
                 {
                     b.Navigation("OrderItems");
-                });
-
-            modelBuilder.Entity("SchoolDriving.Models.Schedule", b =>
-                {
-                    b.Navigation("Students");
                 });
 #pragma warning restore 612, 618
         }

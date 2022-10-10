@@ -1,0 +1,74 @@
+﻿@page "/payment"
+
+@model FrontEnd.Pages.PaymentModel
+
+@{
+    ViewData["Title"] = "Payment";
+}
+
+<section id="services" class="services">
+    <div class="container" data-aos="fade-up">
+        <div class="section-title">
+            <h2>Order Summary</h2>
+        </div>
+        <div class="row">
+            <div class="col-md-4 offset-4">
+                <div class="form-group">
+                    <h4>Course: @Model.Enrollment.Course.Name</h4>
+                </div>
+                <div class="form-group">
+                    <h4>Duration: @Model.Enrollment.Course.Hours hrs</h4>
+                </div>
+                 <div class="form-group">
+                    <h4>Schedule: @Model.Schedule.StartDate.ToString("MMM dd, yyyy")</h4>
+                </div>
+                <div class="form-group">
+                    <h4>Amount Due: &#8369;@Model.Enrollment.Course.Price</h4>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-4 offset-4">
+                <div id="dropin-container"></div>
+                <form id="payForm" method="post">
+                    <div class="row">
+                        <input type="button" id="btnConfirm" value="PURCHASE" class="btn btn-primary" />
+                        <input type="hidden" asp-for="ClientToken" />
+                        <input type="hidden" asp-for="Nonce" />
+                        <input type="hidden" asp-for="EnrollmentId" />
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+    </div>
+</section>
+
+
+
+@section Scripts {
+
+    <script src="https://js.braintreegateway.com/web/dropin/1.33.4/js/dropin.min.js"></script>
+    <script>
+        braintree.dropin.create({
+            // Step three: get client token from your server, such as via
+            //    templates or async http request
+            authorization: '@Model.ClientToken',
+            container: '#dropin-container'
+        }, (error, dropinInstance) => {
+            document.getElementById('btnConfirm').addEventListener('click', function () {
+
+                dropinInstance.requestPaymentMethod(function (requestPaymentMethodErr, payload) {
+                    document.getElementById("Nonce").value = payload.nonce;
+                    document.getElementById("payForm").submit();
+
+                });
+            });
+
+            // Use `dropinInstance` here
+            // Methods documented at https://braintree.github.io/braintree-web-drop-in/docs/current/Dropin.html
+        });
+    </script>
+}

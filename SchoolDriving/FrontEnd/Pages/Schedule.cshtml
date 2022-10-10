@@ -1,0 +1,80 @@
+﻿@page "/schedule"
+
+@model FrontEnd.Pages.ScheduleModel
+
+@{
+    ViewData["Title"] = "Scheduling";
+}
+
+@section Styles {
+    <link href="~/fullcalendar-5.11.3/lib/main.min.css" rel="stylesheet" />
+}
+    <form method="post" id="scheduleForm">
+        <input type="hidden" asp-for="EnrollmentId" />
+        <input type="hidden" asp-for="ScheduleId" />
+    </form>
+    
+    <section id="services" class="services">
+        <div class="container" data-aos="fade-up">
+            <div class="section-title">
+                <h2>Select your preferred Schedule</h2>
+            </div>
+            <div id='calendar'></div>
+        </div>
+    </section>
+
+    <div id="confirm" class="modal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Schedule?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    This action is cannot be changed.
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnConfirm" class="btn btn-success">CONFIRM</button>
+                    <button type="button" id="btnCloseModal" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    @section Scripts {
+    <script src="~/fullcalendar-5.11.3/lib/main.min.js"></script>
+    <script>
+        var confirmModal = new bootstrap.Modal(document.getElementById('confirm'), {});
+        var scheduleId = '';
+        document.addEventListener('DOMContentLoaded', function () {
+            var calendarEl = document.getElementById('calendar');
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                headerToolbar: {
+                    start: 'title', // will normally be on the left. if RTL, will be on the right
+                    center: '',
+                    end: 'prev,next' // will normally be on the right. if RTL, will be on the left
+                },
+                
+                initialView: 'dayGridMonth',
+                events: [
+                            @foreach (var item in Model.Schedules)
+                            {
+            @Html.Raw($"  {{ id: '{item.Id}', start: '{item.StartDate.ToString("yyyy-MM-dd")}', end: '{item.EndDate.ToString("yyyy-MM-dd")}', textColor : '#ffff', title: 'Available', display: 'block', color: '#ffff', backgroundColor: '#228B22'  }},")
+                            }
+                        ],
+                eventClick: function (info) {
+                    document.getElementById("ScheduleId").value = info.event.id;                       
+                    confirmModal.show();
+                }
+
+            });
+            calendar.render();
+        });
+
+        document.getElementById('btnConfirm').addEventListener('click', function() {
+            document.getElementById("scheduleForm").submit();
+        })     
+
+    </script>
+}
