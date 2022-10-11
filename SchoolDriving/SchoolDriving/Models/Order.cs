@@ -20,7 +20,7 @@ public class Order
     public Student? Student { get; set; }
     public Guid StudentId { get; set; }
     public DateTime DateCreated { get; set; }
-    public DateTime LastModified { get; set; }
+    public DateTime LastModified { get; set; }   
     public Guid? InvoiceId { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; }
 }

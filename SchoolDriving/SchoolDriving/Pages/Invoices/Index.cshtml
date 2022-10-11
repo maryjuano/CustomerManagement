@@ -8,7 +8,6 @@
 
 <h1>List of Invoices</h1>
 
-
 <table class="table">
     <thead>
         <tr>
@@ -35,7 +34,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item.PaymentReference)
+                    @(item.Payment?.Reference)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.TotalPrice)

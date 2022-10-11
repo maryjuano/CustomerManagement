@@ -11,9 +11,9 @@ namespace FrontEnd.Models
         }
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public Guid Id { get; set; }
-        
-        public string? PaymentReference { get; set; }
+        public Guid Id { get; set; }               
+        public Payment? Payment { get; set; }
+        public Guid PaymentId { get; set; }
         public bool IsPaid { get; set; }
         public decimal TotalPrice { get; set; }
         public Student? Student { get; set; }

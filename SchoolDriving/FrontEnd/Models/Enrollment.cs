@@ -1,5 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FrontEnd.Models
 {
@@ -27,10 +27,12 @@ namespace FrontEnd.Models
         public string EducationalAttainment { get; set; }
         public EmploymentStatus EmploymentStatus { get; set; }
         public DateTime CreatedOn { get; set; }
-        public bool Approved { get; set; }
-        public Course Course { get; set; }
+        public Course? Course { get; set; }
         public Guid CourseId { get; set; }
+        public Schedule? Schedule { get; set; }
         public Guid? ScheduleId { get; set; }
-        public string? PaymentReference { get; set; }
+        public Payment? Payment { get; set; }
+        public Guid? PaymentId { get; set; }
+        public bool Approved { get; set; }
     }
 }

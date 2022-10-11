@@ -31,7 +31,8 @@ namespace SchoolDriving.Models
         public Guid CourseId { get; set; }
         public Schedule? Schedule { get; set; }
         public Guid? ScheduleId { get; set; }
-        public string? PaymentReference { get; set; }
+        public Payment? Payment { get; set; }
+        public Guid? PaymentId { get; set; }
         public bool Approved { get; set; }
     }  
 }

@@ -96,11 +96,22 @@ namespace FrontEnd.Pages
             Result<Transaction> transactionResult = gateway.Transaction.Sale(request);
             Transaction transaction = gateway.TestTransaction.Settle(transactionResult.Target.Id);
 
-            Enrollment.PaymentReference = transaction.Id;
+            Payment payment = new();
+
+            payment.Reference = transaction.Id;
+            payment.Amount = Enrollment.Course.Price;            
+            payment.ScheduleId = Schedule.Id;
+
+            _context.Payments.Add(payment);
+            await _context.SaveChangesAsync();
+
+            Enrollment.PaymentId = payment.Id;
+
             _context.Attach(Enrollment).State = EntityState.Modified;
             await _context.SaveChangesAsync();
 
-            return Redirect("/paymentsuccess?refId=" + transaction.Id);
+
+            return Redirect("/paymentsuccess?refId=" + transaction.Id + "#services");
         }
 
     }

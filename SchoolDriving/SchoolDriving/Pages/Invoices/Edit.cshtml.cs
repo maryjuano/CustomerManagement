@@ -47,7 +47,7 @@ namespace SchoolDriving.Pages.Invoices
         public async Task<IActionResult> OnPostAsync()
         {
           
-            if(string.IsNullOrWhiteSpace(Invoice.PaymentReference))
+            if(Invoice.PaymentId == Guid.Empty || Invoice.PaymentId == null)
             {
                 ModelState.AddModelError("PaymentReference", "Payment Reference cannot be blank");
             }

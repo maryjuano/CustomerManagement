@@ -7,11 +7,15 @@
     ViewData["Title"] = "Payment Successful";
 }
 
-
-<section id="services" class="services">
+<section id="pricing" class="pricing">
     <div class="container" data-aos="fade-up">
         <div class="section-title">
-            <h1 class="text-bg-success">Your payment has been successful!</h1>
+            <h2>Your payment has been successful!</h2>
+            <p>Your Reference Number is : <strong>@Model.ReferenceId</strong></p>
+        </div>
+        <div class="row">
+            <p>We will be in contact with you shortly.</p>
         </div>
     </div>
 </section>
+

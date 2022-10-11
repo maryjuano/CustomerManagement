@@ -19,5 +19,6 @@ namespace SchoolDriving.Data
         public DbSet<Schedule> Schedules { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Enrollment> Enrollment { get; set; }
+        public DbSet<Payment> Payments { get; set; }
     }
 }

@@ -15,10 +15,14 @@ public class Order
     public Guid Id { get; set; }
     public string OrderReference { get; set; }
     public decimal TotalPrice { get; set; }
+    public Enrollment? Enrollment { get; set; }
+    public Guid EnrollmentId { get; set; }
     public Student? Student { get; set; }
     public Guid StudentId { get; set; }
     public DateTime DateCreated { get; set; }
-    public DateTime LastModified { get; set; }
+    public DateTime LastModified { get; set; } 
+    public Payment? Payment { get; set; }
+    public Guid PaymentId { get; set; }
     public Guid? InvoiceId { get; set; }
     public ICollection<OrderItem> OrderItems { get; set; }
 }
