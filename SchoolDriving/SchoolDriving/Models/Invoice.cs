@@ -13,7 +13,7 @@ namespace SchoolDriving.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }               
         public Payment? Payment { get; set; }
-        public Guid PaymentId { get; set; }
+        public Guid? PaymentId { get; set; }
         public bool IsPaid { get; set; }
         public decimal TotalPrice { get; set; }
         public Student? Student { get; set; }

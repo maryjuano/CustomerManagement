@@ -30,7 +30,7 @@ namespace SchoolDriving.Pages.Invoices
                 return NotFound();
             }
 
-            var invoice =  await _context.Invoices.Include(i => i.OrderItems).FirstOrDefaultAsync(m => m.Id == id);
+            var invoice =  await _context.Invoices.Include(i => i.OrderItems).Include(p => p.Payment).FirstOrDefaultAsync(m => m.Id == id);
             if (invoice == null)
             {
                 return NotFound();

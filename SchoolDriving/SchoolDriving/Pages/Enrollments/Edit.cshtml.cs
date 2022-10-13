@@ -103,7 +103,7 @@ namespace SchoolDriving.Pages.Enrollments
                 order.LastModified = DateTime.Now;
                 order.EnrollmentId = Enrollment.Id;
                 order.Enrollment = Enrollment;
-                order.TotalPrice = Enrollment.Course.Price;
+                order.TotalPrice = Enrollment.Course.Price;               
 
                 order.OrderItems.Add(new OrderItem()
                 {

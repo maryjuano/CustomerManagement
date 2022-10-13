@@ -32,6 +32,12 @@ namespace SchoolDriving.Pages.Schedules
             ViewData["Courses"] = new SelectList(_context.Courses.AsEnumerable(), "Id", "Name");
             ViewData["Instructors"] = new SelectList(_context.Instructors.Select(s => new { Id = s.Id, Text = $"{s.FirstName} {s.LastName}" }).AsEnumerable(), "Id", "Text");
 
+            if(Schedule.StartDate > Schedule.EndDate)
+            {
+                ModelState.AddModelError("InvalidSchedule", "Start Date cannot be greater than End Date");
+                return Page();
+            }
+
             if (!ModelState.IsValid)
             {
                 return Page();

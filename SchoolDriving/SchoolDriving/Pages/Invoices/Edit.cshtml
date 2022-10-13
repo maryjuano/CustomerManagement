@@ -12,11 +12,11 @@
     <div class="row">
         <div class="col-md-6">
             <input type="hidden" asp-for="Invoice.Id" />
-          @*  <div class="form-group">
+            <div class="form-group">
                 <label class="control-label">Payment Reference</label>
-                <input asp-for="Invoice.PaymentReference" readonly="@(Model.Invoice.IsPaid ? "readonly" : null)" class="form-control" />
-                <span asp-validation-for="Invoice.PaymentReference" class="text-danger"></span>
-            </div>*@
+                <input asp-for="Invoice.Payment.Reference" readonly="readonly"  class="form-control" />
+                <span asp-validation-for="Invoice.Payment.Reference" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label>Total Amount</label>
                 <input asp-for="Invoice.TotalPrice" class="form-control" readonly="readonly" />
@@ -28,10 +28,10 @@
             </div>
         </div>
         <div class="col-md-6">
-          @*  <div class="form-group">
-                <label asp-for="Invoice.PaymentDate" class="control-label"></label>
-                <input type="date" asp-for="Invoice.PaymentDate" readonly="@(Model.Invoice.IsPaid ? "readonly" : null)" class="form-control" />
-            </div>*@
+            <div class="form-group">
+                <label asp-for="Invoice" class="control-label"></label>
+                <input type="date" asp-for="Invoice.PaymentDate" readonly="readonly" class="form-control" />
+            </div>
             <div class="form-group">
                 <label asp-for="Invoice.DateCreated" class="control-label"></label>
                 <input type="date" asp-for="Invoice.DateCreated" readonly="readonly" class="form-control" />
@@ -94,10 +94,7 @@
         </div>
         <div class="col-md-8">
         </div>
-        <div class="col-md-2">
-            @if(!Model.Invoice.IsPaid) {
-                <button type="submit" class="btn btn-success">SAVE</button>
-            }
+        <div class="col-md-2">          
            
         </div>
     </div>
