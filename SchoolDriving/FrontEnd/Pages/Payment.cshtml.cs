@@ -94,6 +94,13 @@ namespace FrontEnd.Pages
             };
 
             Result<Transaction> transactionResult = gateway.Transaction.Sale(request);
+
+            if(!transactionResult.IsSuccess())
+            {
+                ModelState.AddModelError("Payment", $"Payment has Failed : {transactionResult.Message}");
+                return Page();
+            }
+
             Transaction transaction = gateway.TestTransaction.Settle(transactionResult.Target.Id);
 
             Payment payment = new();
