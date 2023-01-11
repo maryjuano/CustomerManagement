@@ -124,6 +124,41 @@
     </div>
 
     <br />
+    <h5>Requirements Uploaded</h5>
+    <div class="col-md-12">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        File Name
+                    </th>
+                    <th>
+                        File Type
+                    </th>
+                    <th>
+                        File
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Enrollment.Requirements)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FileType)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.FileName)
+                        </td>
+                        <td>
+                            <a asp-page-handler="DownloadFile" asp-route-id="@item.Id">@item.FileName</a>                                            
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
 
     <div class="row">
         <div class="col-md-2">

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using SchoolDriving.Data;
 using SchoolDriving.Models;
 
@@ -30,15 +31,29 @@ namespace SchoolDriving.Pages.Enrollments
                 return NotFound();
             }
 
-            var enrollment =  await _context.Enrollment.Include(e => e.Course).FirstOrDefaultAsync(m => m.Id == id);
+            var enrollment =  await _context.Enrollment.Include(e => e.Course).Include(e => e.Requirements).FirstOrDefaultAsync(m => m.Id == id);
+
             if (enrollment == null)
             {
                 return NotFound();
             }
+
             Enrollment = enrollment;
             ViewData["CourseId"] = new SelectList(_context.Courses, "Id", "Id");
 
             return Page();
+        }
+
+        public async Task<IActionResult> OnGetDownloadFile(Guid id)
+        {
+            var file = _context.Requirements.Find(id);
+            if (file == null)
+            {
+                return NotFound();
+            }
+
+            //Send the File to Download.
+            return File(file.FileBytes, file.FileType, file.FileName);
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.

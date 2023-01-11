@@ -1,10 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FrontEnd.Models;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace FrontEnd.Models
 {
     public class Enrollment
     {
+        public Enrollment()
+        {
+            Requirements = new HashSet<Requirements>();
+        }
+
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public Guid Id { get; set; }
@@ -34,5 +40,6 @@ namespace FrontEnd.Models
         public Payment? Payment { get; set; }
         public Guid? PaymentId { get; set; }
         public bool Approved { get; set; }
+        public ICollection<Requirements> Requirements { get; set; }
     }
 }

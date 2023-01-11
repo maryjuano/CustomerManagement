@@ -20,5 +20,6 @@ namespace SchoolDriving.Data
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Enrollment> Enrollment { get; set; }
         public DbSet<Payment> Payments { get; set; }
+        public DbSet<Requirements> Requirements { get; set; }
     }
 }

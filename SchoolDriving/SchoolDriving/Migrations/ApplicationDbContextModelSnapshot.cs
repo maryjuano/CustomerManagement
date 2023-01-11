@@ -508,6 +508,34 @@ namespace SchoolDriving.Migrations
                     b.ToTable("Payments");
                 });
 
+            modelBuilder.Entity("SchoolDriving.Models.Requirements", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("EnrollmentId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<byte[]>("FileBytes")
+                        .IsRequired()
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FileType")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EnrollmentId");
+
+                    b.ToTable("Requirements");
+                });
+
             modelBuilder.Entity("SchoolDriving.Models.Schedule", b =>
                 {
                     b.Property<Guid>("Id")
@@ -751,6 +779,15 @@ namespace SchoolDriving.Migrations
                     b.Navigation("Schedule");
                 });
 
+            modelBuilder.Entity("SchoolDriving.Models.Requirements", b =>
+                {
+                    b.HasOne("SchoolDriving.Models.Enrollment", null)
+                        .WithMany("Requirements")
+                        .HasForeignKey("EnrollmentId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SchoolDriving.Models.Schedule", b =>
                 {
                     b.HasOne("SchoolDriving.Models.Course", "Course")
@@ -774,6 +811,11 @@ namespace SchoolDriving.Migrations
                     b.Navigation("Instructor");
 
                     b.Navigation("Student");
+                });
+
+            modelBuilder.Entity("SchoolDriving.Models.Enrollment", b =>
+                {
+                    b.Navigation("Requirements");
                 });
 
             modelBuilder.Entity("SchoolDriving.Models.Instructor", b =>

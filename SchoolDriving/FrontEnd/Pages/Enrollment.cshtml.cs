@@ -19,6 +19,8 @@ namespace FrontEnd.Pages
         public string CourseName { get; set; }
         public decimal Price { get; set; }
         public double Hours { get; set; }
+        [BindProperty]
+        public List<IFormFile> FileRequirements { get; set; }
 
         [BindProperty]
         public Enrollment Enrollment { get; set; } = default!;
@@ -39,12 +41,43 @@ namespace FrontEnd.Pages
             CourseName = course.Name;
             Price = course.Price;
             Hours = course.Hours;
-            CourseId = course.Id;         
+            CourseId = course.Id;
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
+            List<Requirements> requirements = new List<Requirements>();
+
+            foreach (var formFile in FileRequirements)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await formFile.CopyToAsync(memoryStream);
+
+                    // Upload the file if less than 2 MB
+                    if (memoryStream.Length < 2097152)
+                    {
+                        requirements.Add(new Requirements()
+                        {
+                            FileBytes = memoryStream.ToArray(),
+                            FileType = formFile.ContentType,
+                            FileName = formFile.FileName
+                        });
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("File", "The file is too large. Max upload is 2 MB");
+                    }
+                }
+            }
+
+            if(requirements.Count == 0)
+            {
+                ModelState.AddModelError("File", "Please Upload your requirements.");
+            }
+            
+
             Guid courseId = CourseId;
 
             var course = await _context.Courses.FindAsync(courseId);
@@ -73,13 +106,28 @@ namespace FrontEnd.Pages
             if (!ModelState.IsValid)
             {
                 return Page();
-            }       
+            }
 
             _context.Enrollment.Add(Enrollment);
 
             await _context.SaveChangesAsync();
 
-            return Redirect($"/schedule?enrollmentId={Enrollment.Id}#services");           
+
+            foreach (var requirement in requirements)
+            {
+                requirement.EnrollmentId = Enrollment.Id;
+            }
+
+            _context.Requirements.AddRange(requirements);
+
+            await _context.SaveChangesAsync();
+
+            return Redirect($"/schedule?enrollmentId={Enrollment.Id}#services");
+        }
+
+        private async Task ProcessFiles()
+        {
+
         }
     }
 }

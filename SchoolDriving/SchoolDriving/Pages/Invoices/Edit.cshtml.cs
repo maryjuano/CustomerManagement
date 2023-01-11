@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using SchoolDriving.Data;
 using SchoolDriving.Models;
+using System.Runtime.Intrinsics.Arm;
 
 namespace SchoolDriving.Pages.Invoices
 {
@@ -30,7 +26,7 @@ namespace SchoolDriving.Pages.Invoices
                 return NotFound();
             }
 
-            var invoice =  await _context.Invoices.Include(i => i.OrderItems).Include(p => p.Payment).FirstOrDefaultAsync(m => m.Id == id);
+            var invoice = await _context.Invoices.Include(i => i.OrderItems).Include(p => p.Payment).FirstOrDefaultAsync(m => m.Id == id);
             if (invoice == null)
             {
                 return NotFound();
@@ -46,16 +42,16 @@ namespace SchoolDriving.Pages.Invoices
         // For more details, see https://aka.ms/RazorPagesCRUD.
         public async Task<IActionResult> OnPostAsync()
         {
-          
-            if(Invoice.PaymentId == Guid.Empty || Invoice.PaymentId == null)
+
+            if (Invoice.PaymentId == Guid.Empty || Invoice.PaymentId == null)
             {
                 ModelState.AddModelError("PaymentReference", "Payment Reference cannot be blank");
             }
 
-            if(Invoice.PaymentDate == DateTime.MinValue || Invoice.PaymentDate == null)
+            if (Invoice.PaymentDate == DateTime.MinValue || Invoice.PaymentDate == null)
             {
                 ModelState.AddModelError("PaymentDate", "Invalid Payment Date.");
-            }          
+            }
 
             if (!ModelState.IsValid)
             {
@@ -86,9 +82,37 @@ namespace SchoolDriving.Pages.Invoices
             return RedirectToPage("./Index");
         }
 
+        public async Task<IActionResult> OnGetGeneratePdf(Guid? id)
+        {
+            var Renderer = new IronPdf.ChromePdfRenderer();
+
+            if (id == null || id == Guid.Empty)
+            {
+                return NotFound();
+            }
+
+            var invoice = await _context.Invoices.Include(s => s.Student).FirstOrDefaultAsync(i => i.Id == id);
+
+            if (invoice == null)
+            {
+                return NotFound();
+            }          
+
+            // Create a PDF from a URL or local file path
+            using var pdf = Renderer.RenderUrlAsPdf($"{HttpContext.Request.Scheme}://{HttpContext.Request.Host.Value}/Invoices/DownloadPdf?id={id.ToString()}");
+
+            if (pdf == null)
+            {
+                return NotFound();
+            }
+
+            ////Send the File to Download.
+            return File(pdf.BinaryData, "application/pdf", $"{invoice.Student.LastName}-{invoice.Student.FirstName}-{invoice.DateCreated.ToString("MM-dd-yyyy")}.pdf");
+        }
+
         private bool InvoiceExists(Guid id)
         {
-          return _context.Invoices.Any(e => e.Id == id);
+            return _context.Invoices.Any(e => e.Id == id);
         }
     }
 }
