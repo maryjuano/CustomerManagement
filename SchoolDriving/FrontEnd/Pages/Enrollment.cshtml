@@ -26,7 +26,7 @@
                         <li>Any of the Following:</li>
                         <ul>
                             <li>- Barangay Clearance</li>
-                            <li>- National Clearance</li>
+                            <li>- National ID</li>
                             <li>- NBI Clearance</li>
                         </ul>
                     </ul>
@@ -67,8 +67,8 @@
                     </div>
                     <div class="form-group">
                         <label>Birthday</label>
-                        <input type="date" asp-for="Enrollment.BirthDate" class="form-control" />
-                        <span asp-validation-for="Enrollment.BirthDate" class="text-danger"></span>
+                        <input type="date" asp-for="Enrollment.BirthDate" class="form-control" max="@DateTime.Now.AddYears(-18).ToString("yyyy-MM-dd")" />
+                        <span asp-validation-for="Enrollment.BirthDate"  class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label>Educational Attainment</label>

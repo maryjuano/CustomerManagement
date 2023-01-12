@@ -15,6 +15,10 @@ namespace FrontEnd.Pages
             _context = context;
         }
 
+
+        [BindProperty]
+        public string PaymentReference { get; set; }
+
         [BindProperty]
         public string ClientToken { get; set; }
 
@@ -56,6 +60,47 @@ namespace FrontEnd.Pages
             //EnrollmentId = enrollmentId;
 
             return Page();
+        }
+        public async Task<IActionResult> OnPostGcash()
+        {
+            Enrollment = await _context.Enrollment.Include(e => e.Course).SingleOrDefaultAsync(e => e.Id == EnrollmentId);
+
+            if (Enrollment == null)
+            {
+                Redirect("/");
+            }
+
+            Schedule = await _context.Schedules.FindAsync(Enrollment.ScheduleId);
+
+            if (Schedule == null)
+            {
+                Redirect("/");
+            }
+
+
+
+            if (string.IsNullOrWhiteSpace(PaymentReference))
+            {
+                Redirect("/");
+            }
+
+
+            Payment payment = new();
+
+            payment.Reference = PaymentReference;
+            payment.Amount = Enrollment.Course.Price;
+            payment.ScheduleId = Schedule.Id;
+
+            _context.Payments.Add(payment);
+            await _context.SaveChangesAsync();
+
+            Enrollment.PaymentId = payment.Id;
+
+            _context.Attach(Enrollment).State = EntityState.Modified;
+            await _context.SaveChangesAsync();
+
+
+            return Redirect("/paymentsuccess?refId=" + PaymentReference + "#services");
         }
 
 
